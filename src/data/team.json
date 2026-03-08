@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Maya Rinaldi",
+    "role": "Strategy Director",
+    "bio": "Shapes positioning, offers, and narrative architecture so every page feels focused and commercially useful.",
+    "email": "maya@spertustudio.demo"
+  },
+  {
+    "name": "Luca Serra",
+    "role": "Design Lead",
+    "bio": "Builds premium interfaces with restrained visual systems, strong hierarchy, and responsive precision.",
+    "email": "luca@spertustudio.demo"
+  },
+  {
+    "name": "Giada Conti",
+    "role": "Content Systems Lead",
+    "bio": "Maps structured content into safe editorial workflows that help teams publish confidently without touching code.",
+    "email": "giada@spertustudio.demo"
+  }
+]

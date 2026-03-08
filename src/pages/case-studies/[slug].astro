@@ -1,0 +1,109 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import siteSettings from '../../data/site-settings.json';
+
+export async function getStaticPaths() {
+	const caseStudies = await getCollection('case-studies');
+
+	return caseStudies.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={`${entry.data.title} — ${siteSettings.siteName}`} description={entry.data.description}>
+	<main class="case-study-page">
+		<section class="section">
+			<div class="container">
+				<a class="back-link" href="/#case-studies">← Back to case studies</a>
+				<div class="case-study-hero card">
+					<div class="case-study-accent" style={`background: ${entry.data.accent};`}></div>
+					<div class="case-study-copy">
+						<p class="eyebrow">{entry.data.sector}</p>
+						<h1>{entry.data.title}</h1>
+						<p class="lede">{entry.data.description}</p>
+						<ul>
+							{entry.data.results.map((result) => <li>{result}</li>)}
+						</ul>
+					</div>
+				</div>
+				<article class="case-study-body card prose">
+					<Content />
+				</article>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.case-study-page {
+		padding-bottom: 4rem;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-bottom: 1.25rem;
+		color: var(--text-muted);
+	}
+
+	.case-study-hero,
+	.case-study-body {
+		overflow: hidden;
+	}
+
+	.case-study-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+		margin-bottom: 1.5rem;
+	}
+
+	.case-study-accent {
+		min-height: 280px;
+	}
+
+	.case-study-copy {
+		padding: 2rem;
+	}
+
+	.case-study-copy h1 {
+		margin: 1rem 0 0.75rem;
+		font-size: clamp(2.2rem, 4vw, 3.8rem);
+		line-height: 1;
+	}
+
+	.lede,
+	.prose :global(p) {
+		color: var(--text-muted);
+		line-height: 1.8;
+	}
+
+	.case-study-copy ul {
+		margin: 1.5rem 0 0;
+		padding-left: 1.1rem;
+		color: var(--text);
+	}
+
+	.case-study-body {
+		padding: 2rem;
+	}
+
+	.prose :global(h2),
+	.prose :global(h3) {
+		margin-top: 1.5rem;
+	}
+
+	@media (max-width: 800px) {
+		.case-study-hero {
+			grid-template-columns: 1fr;
+		}
+
+		.case-study-accent {
+			min-height: 160px;
+		}
+	}
+</style>
